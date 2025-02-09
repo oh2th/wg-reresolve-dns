@@ -1,0 +1,6 @@
+[Unit]
+Description=WireGuard Tools - Reresolve DNS
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/bin/reresolve-dns.sh
