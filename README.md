@@ -12,14 +12,14 @@ make install
 
 This will:
 - Clone or update the WireGuard tools repository.
-- Install `wg-resrolve-dns.service` and `wg-resrolve-dns.timer` to `/etc/systemd/system/`.
+- Install `wg-reresolve-dns.service` and `wg-reresolve-dns.timer` to `/etc/systemd/system/`.
 - Install `reresolve-dns.sh` to `/usr/local/bin/`.
 - Reload systemd if necessary.
 - Enable and start the timer.
 
 ## Adjusting Timings
 
-The execution interval of the DNS re-resolver is defined in `wg-resrolve-dns.timer` under the `[Timer]` section:
+The execution interval of the DNS re-resolver is defined in `wg-reresolve-dns.timer` under the `[Timer]` section:
 
 ```ini
 [Timer]
@@ -30,11 +30,11 @@ OnUnitActiveSec=60s
 - `OnBootSec=300s` ensures the script runs 300 seconds after system boot.
 - `OnUnitActiveSec=60s` schedules the script to run every 60 seconds after the last execution.
 
-To change the interval, edit `wg-resrolve-dns.timer` and adjust these values. Then reload systemd:
+To change the interval, edit `wg-reresolve-dns.timer` and adjust these values. Then reload systemd:
 
 ```sh
 sudo systemctl daemon-reload
-sudo systemctl restart wg-resrolve-dns.timer
+sudo systemctl restart wg-reresolve-dns.timer
 ```
 
 ## Uninstallation
@@ -57,4 +57,8 @@ To remove the cloned WireGuard tools repository, run:
 ```sh
 make clean
 ```
+
+## Attribution
+
+This project uses `reresolve-dns.sh` from the [WireGuard tools](https://git.zx2c4.com/wireguard-tools/) repository.
 

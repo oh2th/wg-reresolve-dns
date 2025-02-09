@@ -16,19 +16,19 @@ clone:
 	fi
 
 install: clone
-	install -D -m644 -C wg-resrolve-dns.service $(SYSTEMD_DIR)/wg-resrolve-dns.service
-	install -D -m644 -C wg-resrolve-dns.timer $(SYSTEMD_DIR)/wg-resrolve-dns.timer
+	install -D -m644 -C wg-reresolve-dns.service $(SYSTEMD_DIR)/wg-reresolve-dns.service
+	install -D -m644 -C wg-reresolve-dns.timer $(SYSTEMD_DIR)/wg-reresolve-dns.timer
 	install -D -m755 -C $(SCRIPT_SRC) $(SCRIPT_DEST)
-	@if [ -n "$(shell find $(SYSTEMD_DIR) -name 'wg-resrolve-dns.*' -newer /proc/uptime)" ]; then \
+	@if [ -n "$(shell find $(SYSTEMD_DIR) -name 'wg-reresolve-dns.*' -newer /proc/uptime)" ]; then \
 		systemctl daemon-reload; \
 	fi
-	@echo "Installation complete. Enable the timer with: sudo systemctl enable --now wg-resrolve-dns.timer"
+	@echo "Installation complete. Enable the timer with: sudo systemctl enable --now wg-reresolve-dns.timer"
 
 uninstall:
-	rm -f $(SYSTEMD_DIR)/wg-resrolve-dns.service
-	rm -f $(SYSTEMD_DIR)/wg-resrolve-dns.timer
+	rm -f $(SYSTEMD_DIR)/wg-reresolve-dns.service
+	rm -f $(SYSTEMD_DIR)/wg-reresolve-dns.timer
 	rm -f $(SCRIPT_DEST)
-	@echo "Uninstallation complete. Disable the timer with: sudo systemctl disable --now wg-resrolve-dns.timer"
+	@echo "Uninstallation complete. Disable the timer with: sudo systemctl disable --now wg-reresolve-dns.timer"
 
 clean:
 	rm -rf $(WG_TOOLS_DIR)
