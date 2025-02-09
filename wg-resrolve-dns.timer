@@ -2,8 +2,8 @@
 Description=WireGuard Tools - Reresolve DNS
 
 [Timer]
-OnUnitActiveSec=10s
-OnBootSec=10s
+OnUnitActiveSec=60s
+OnBootSec=300s
 
 [Install]
 WantedBy=timers.target

@@ -9,12 +9,19 @@ all:
 	@echo "Run 'make install' to install the service and script."
 
 clone:
-	git clone --depth=1 $(WG_TOOLS_REPO) $(WG_TOOLS_DIR) || (cd $(WG_TOOLS_DIR) && git pull)
+	@if [ -d "$(WG_TOOLS_DIR)/.git" ]; then \
+		cd $(WG_TOOLS_DIR) && git pull; \
+	else \
+		git clone --depth=1 $(WG_TOOLS_REPO) $(WG_TOOLS_DIR); \
+	fi
 
 install: clone
-	install -Dm644 wg-resrolve-dns.service $(SYSTEMD_DIR)/wg-resrolve-dns.service
-	install -Dm644 wg-resrolve-dns.timer $(SYSTEMD_DIR)/wg-resrolve-dns.timer
-	install -Dm755 $(SCRIPT_SRC) $(SCRIPT_DEST)
+	install -D -m644 -C wg-resrolve-dns.service $(SYSTEMD_DIR)/wg-resrolve-dns.service
+	install -D -m644 -C wg-resrolve-dns.timer $(SYSTEMD_DIR)/wg-resrolve-dns.timer
+	install -D -m755 -C $(SCRIPT_SRC) $(SCRIPT_DEST)
+	@if [ -n "$(shell find $(SYSTEMD_DIR) -name 'wg-resrolve-dns.*' -newer /proc/uptime)" ]; then \
+		systemctl daemon-reload; \
+	fi
 	@echo "Installation complete. Enable the timer with: sudo systemctl enable --now wg-resrolve-dns.timer"
 
 uninstall:
